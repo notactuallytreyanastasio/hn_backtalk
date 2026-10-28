@@ -137,7 +137,9 @@ final class Roast {
         }
         if shown { set(status: "Writing about “\(story.title)”…") }
         let start = Date()
-        let entry = gemma?.reply(to: prompt, maxTokens: 220)
+        // The fine-tuned model sometimes opens with ": ".
+        let entry = gemma?.reply(to: prompt, maxTokens: 220)?
+            .trimmingCharacters(in: CharacterSet(charactersIn: ":").union(.whitespacesAndNewlines))
         let seconds = Date().timeIntervalSince(start)
         DispatchQueue.main.async {
             self.busy = false
