@@ -1,0 +1,9 @@
+build/
+*.xcodeproj/
+training/raw/
+training/data/
+training/.venv/
+training/models/
+training/llama.cpp/
+training/.venv-convert/
+__pycache__/

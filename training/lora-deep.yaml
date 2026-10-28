@@ -1,0 +1,26 @@
+# Second stage: the same n-gate voice, now reading the deep thread prompt
+# (ten arguments followed down their subthreads, ~1,650 tokens). Starts from
+# the first run's best checkpoint (iteration 300, val 3.08; it overfit after),
+# so it only has to learn to read longer input, not the voice.
+model: models/gemma-4-e4b-it-8bit
+train: true
+data: data
+fine_tune_type: lora
+mask_prompt: true
+num_layers: 16
+resume_adapter_file: models/ngate-300/adapters.safetensors
+batch_size: 2
+grad_accumulation_steps: 2
+iters: 400                 # 800 examples, about half an epoch
+learning_rate: 5.0e-5
+max_seq_length: 2304        # p95 prompt 1,800 tokens + entry
+grad_checkpoint: true
+adapter_path: models/ngate-deep
+save_every: 50
+steps_per_report: 10
+steps_per_eval: 50
+val_batches: 10
+lora_parameters:
+  rank: 16
+  scale: 20.0
+  dropout: 0.05

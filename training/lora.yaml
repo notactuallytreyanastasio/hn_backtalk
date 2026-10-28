@@ -1,0 +1,24 @@
+# n-gate.com voice LoRA for Gemma 4 E4B. Run: .venv/bin/mlx_lm.lora -c lora.yaml
+# Shape follows ../my_me_bot/training/gemma_voice_lora.yaml (top 16 layers,
+# prompt masked); rank, rate and length are sized for ~2.5k examples of
+# ~100-word paragraphs instead of 40k tweets.
+model: models/gemma-4-e4b-it-8bit
+train: true
+data: data
+fine_tune_type: lora
+mask_prompt: true
+num_layers: 16
+batch_size: 4
+iters: 860                 # 2 epochs of 1,710 thread examples at batch 4
+learning_rate: 1.0e-4
+max_seq_length: 640         # story + 4 comments (~300 tokens) + entry
+grad_checkpoint: true
+adapter_path: models/ngate-adapter
+save_every: 100
+steps_per_report: 25
+steps_per_eval: 150
+val_batches: 20
+lora_parameters:
+  rank: 16
+  scale: 20.0
+  dropout: 0.05

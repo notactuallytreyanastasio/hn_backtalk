@@ -1,0 +1,37 @@
+name: Backtalk
+options:
+  bundleIdPrefix: com.bgrayson
+  deploymentTarget:
+    iOS: "27.1"
+settings:
+  base:
+    DEVELOPMENT_TEAM: NY422J2AAW
+    SWIFT_VERSION: "5.0"
+targets:
+  Backtalk:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+        excludes: ["Info.plist"]
+    dependencies:
+      # llama.cpp as built by ../my_me_bot, which runs Gemma 4 E4B on iPhone.
+      - framework: ../my_me_bot/Frameworks/llama.xcframework
+        embed: true
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Backtalk
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        NSCameraUsageDescription: The iPhone Duo only lights its rear display brightly while the camera runs. No frames are kept.
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bgrayson.backtalk
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_STYLE: Automatic
+        GENERATE_INFOPLIST_FILE: NO
